@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects — https://developers.cloudflare.com/pages/configuration/redirects/
+# Friendly English aliases → canonical Indonesian routes.
+/products        /produk     301
+/products/:slug  /produk/:slug 301
+/catalog         /produk     301
+/katalog         /produk     301
+/about           /tentang    301
+/contact         /kontak     301
+/index.html      /           301

@@ -18,6 +18,7 @@ export function Price({
   return (
     <p className={cn("flex flex-wrap items-baseline gap-x-2", className)}>
       <span
+        data-testid="price"
         className={cn(
           "font-extrabold tabular-nums",
           size === "lg" ? "text-2xl sm:text-3xl" : "text-base",

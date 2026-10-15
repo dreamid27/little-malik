@@ -102,7 +102,21 @@ function AboutPage() {
             <div className="absolute inset-0 rounded-[3rem] bg-butter" />
             <SunMascot className="absolute -top-8 -right-6 w-36" />
             <Cloud className="absolute bottom-10 -left-8 w-44" />
-            <StrawHat className="absolute top-[30%] left-1/2 w-[80%] -translate-x-1/2 -rotate-3" />
+            <StrawHat className="absolute top-[10%] left-1/2 w-[70%] -translate-x-1/2 -rotate-3" />
+            <img
+              src="/images/products/romper-pagi-cerah-1.svg"
+              alt=""
+              width={420}
+              height={420}
+              className="absolute bottom-[6%] left-[8%] w-[44%] -rotate-6"
+            />
+            <img
+              src="/images/products/kaos-matahari-kecil-1.svg"
+              alt=""
+              width={420}
+              height={420}
+              className="absolute right-[6%] bottom-[8%] w-[44%] rotate-6"
+            />
             <Sparkle className="absolute right-[18%] bottom-[22%] w-6" />
           </div>
         </div>
@@ -144,7 +158,10 @@ function AboutPage() {
               <div>
                 <dt className="font-bold">Pemesanan</dt>
                 <dd className="text-ink-soft">
-                  Lewat WhatsApp {site.contact.whatsappDisplay}
+                  Lewat WhatsApp{" "}
+                  <span className="whitespace-nowrap">
+                    {site.contact.whatsappDisplay}
+                  </span>
                 </dd>
               </div>
               <div>

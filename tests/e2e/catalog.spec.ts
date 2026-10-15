@@ -14,7 +14,9 @@ async function filterChip(page: Page, name: RegExp) {
     }
     return dialog.getByRole("button", { name })
   }
-  return page.getByRole("complementary", { name: "Filter produk" }).getByRole("button", { name })
+  return page
+    .getByRole("complementary", { name: "Filter produk" })
+    .getByRole("button", { name })
 }
 
 async function closeFilterSheet(page: Page) {
@@ -38,20 +40,26 @@ test.describe("catalogue", () => {
     await expect(page).toHaveURL(/category=dress/)
     await expect(resultCount(page)).toHaveText("2")
     await (await filterChip(page, /^Muslim/)).click()
-    await expect(page).toHaveURL(/category=dress%2Cmuslim|category=dress,muslim/)
+    await expect(page).toHaveURL(
+      /category=dress%2Cmuslim|category=dress,muslim/
+    )
     await expect(resultCount(page)).toHaveText("4")
     await closeFilterSheet(page)
     await expect(cards(page)).toHaveCount(4)
   })
 
-  test("filters combine across groups and show active pills", async ({ page }) => {
+  test("filters combine across groups and show active pills", async ({
+    page,
+  }) => {
     await gotoHydrated(page, "/produk")
     await (await filterChip(page, /^0–12 bulan/)).click()
     await (await filterChip(page, /^Laki-laki/)).click()
     await closeFilterSheet(page)
 
     const pills = page.getByRole("group", { name: "Filter aktif" })
-    await expect(pills.getByRole("button", { name: /0–12 bulan/ })).toBeVisible()
+    await expect(
+      pills.getByRole("button", { name: /0–12 bulan/ })
+    ).toBeVisible()
     await expect(pills.getByRole("button", { name: /Laki-laki/ })).toBeVisible()
     const count = Number(await resultCount(page).textContent())
     expect(count).toBeGreaterThan(0)
@@ -63,14 +71,19 @@ test.describe("catalogue", () => {
     await expect(resultCount(page)).toHaveText("16")
   })
 
-  test("deep links restore filters after hydration", async ({ page, consoleErrors }) => {
+  test("deep links restore filters after hydration", async ({
+    page,
+    consoleErrors,
+  }) => {
     await gotoHydrated(page, "/produk?category=muslim&gender=perempuan")
     await expect(resultCount(page)).toHaveText("1")
     await expect(cards(page).first()).toContainText("Gamis Mentari")
     expect(consoleErrors).toEqual([])
   })
 
-  test("invalid search params are ignored instead of crashing", async ({ page }) => {
+  test("invalid search params are ignored instead of crashing", async ({
+    page,
+  }) => {
     await gotoHydrated(page, "/produk?category=robot&sort=lol&price=999")
     await expect(resultCount(page)).toHaveText("16")
   })
@@ -94,8 +107,10 @@ test.describe("catalogue", () => {
     await page.getByLabel("Urutkan").selectOption("price-asc")
     await expect(page).toHaveURL(/sort=price-asc/)
     const prices = await cards(page)
-      .locator("p >> nth=1")
-      .evaluateAll((els) => els.map((el) => Number(el.textContent?.replace(/\D/g, "") ?? 0)))
+      .getByTestId("price")
+      .evaluateAll((els) =>
+        els.map((el) => Number(el.textContent.replace(/\D/g, "")))
+      )
     expect(prices.length).toBe(16)
     expect(prices).toEqual([...prices].sort((a, b) => a - b))
   })
@@ -115,8 +130,6 @@ test.describe("catalogue", () => {
     await gotoHydrated(page, "/produk")
     await cards(page).first().getByRole("link").click()
     await expect(page).toHaveURL(/\/produk\/[a-z-]+$/)
-    await expect(page.getByRole("button", { name: /Pesan via WhatsApp|Pesan/ }).or(
-      page.getByTestId("order-whatsapp")
-    ).first()).toBeVisible()
+    await expect(page.getByTestId("order-whatsapp")).toBeVisible()
   })
 })

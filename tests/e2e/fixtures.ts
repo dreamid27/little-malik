@@ -15,10 +15,18 @@ type Fixtures = {
 export const test = base.extend<Fixtures>({
   context: async ({ context }, use) => {
     await context.route("https://wa.me/**", (route) =>
-      route.fulfill({ status: 200, contentType: "text/html", body: "<title>WhatsApp</title>" })
+      route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<title>WhatsApp</title>",
+      })
     )
     await context.route("https://instagram.com/**", (route) =>
-      route.fulfill({ status: 200, contentType: "text/html", body: "<title>Instagram</title>" })
+      route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<title>Instagram</title>",
+      })
     )
     await use(context)
   },
@@ -50,4 +58,5 @@ export function whatsappText(url: string): string {
   return new URL(url).searchParams.get("text") ?? ""
 }
 
-export const isMobile = (page: Page) => (page.viewportSize()?.width ?? 1280) < 768
+export const isMobile = (page: Page) =>
+  (page.viewportSize()?.width ?? 1280) < 768

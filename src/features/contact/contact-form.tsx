@@ -61,7 +61,11 @@ export function ContactForm() {
         next[key] = issue.message
     }
     setErrors(next)
-    form.querySelector<HTMLElement>("[aria-invalid=true]")?.focus()
+    // Errors render on the next commit, so focus by field name, in form order.
+    const firstInvalid = (["name", "message"] as const).find((key) => next[key])
+    if (firstInvalid) {
+      form.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus()
+    }
     return null
   }
 

@@ -62,20 +62,30 @@ describe("toggleInList", () => {
 
 describe("filterProducts", () => {
   it("returns everything with no filters", () => {
-    expect(filterProducts(products, filtersFor({}))).toHaveLength(products.length)
+    expect(filterProducts(products, filtersFor({}))).toHaveLength(
+      products.length
+    )
   })
 
   it("filters by multiple categories (OR within a group)", () => {
-    const result = filterProducts(products, filtersFor({ category: "dress,muslim" }))
+    const result = filterProducts(
+      products,
+      filtersFor({ category: "dress,muslim" })
+    )
     expect(result.length).toBeGreaterThan(0)
-    expect(result.every((p) => p.category === "dress" || p.category === "muslim")).toBe(true)
+    expect(
+      result.every((p) => p.category === "dress" || p.category === "muslim")
+    ).toBe(true)
   })
 
   it("combines groups with AND", () => {
-    const result = filterProducts(products, filtersFor({ category: "bayi", age: "bayi" }))
-    expect(result.every((p) => p.category === "bayi" && p.ageGroups.includes("bayi"))).toBe(
-      true
+    const result = filterProducts(
+      products,
+      filtersFor({ category: "bayi", age: "bayi" })
     )
+    expect(
+      result.every((p) => p.category === "bayi" && p.ageGroups.includes("bayi"))
+    ).toBe(true)
   })
 
   it("includes unisex items when filtering a specific gender", () => {
@@ -96,11 +106,15 @@ describe("filterProducts", () => {
   })
 
   it("searches case- and accent-insensitively across name, material and colour", () => {
-    expect(filterProducts(products, filtersFor({ q: "GAMIS" })).map((p) => p.slug)).toEqual([
-      "gamis-mentari",
-    ])
-    expect(filterProducts(products, filtersFor({ q: "organik" })).length).toBeGreaterThan(0)
-    expect(filterProducts(products, filtersFor({ q: "zzz-tidak-ada" }))).toHaveLength(0)
+    expect(
+      filterProducts(products, filtersFor({ q: "GAMIS" })).map((p) => p.slug)
+    ).toEqual(["gamis-mentari"])
+    expect(
+      filterProducts(products, filtersFor({ q: "organik" })).length
+    ).toBeGreaterThan(0)
+    expect(
+      filterProducts(products, filtersFor({ q: "zzz-tidak-ada" }))
+    ).toHaveLength(0)
   })
 })
 
@@ -140,7 +154,11 @@ describe("activeFilterCount", () => {
   it("counts every active value", () => {
     expect(
       activeFilterCount(
-        catalogSearchSchema.parse({ category: "dress,atasan", gender: "unisex", q: "kaos" })
+        catalogSearchSchema.parse({
+          category: "dress,atasan",
+          gender: "unisex",
+          q: "kaos",
+        })
       )
     ).toBe(4)
   })

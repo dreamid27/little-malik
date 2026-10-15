@@ -86,13 +86,11 @@ export function ActiveFilters({
           key={pill.key}
           type="button"
           onClick={() => onChange(pill.remove)}
+          aria-label={`Hapus filter ${pill.label}`}
           className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-butter py-1.5 pr-2.5 pl-3.5 text-sm font-bold transition-colors hover:bg-straw"
         >
           {pill.label}
-          <CloseIcon
-            className="size-3.5"
-            title={`Hapus filter ${pill.label}`}
-          />
+          <CloseIcon className="size-3.5" />
         </button>
       ))}
       <button

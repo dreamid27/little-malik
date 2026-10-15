@@ -31,6 +31,7 @@ export default [
       "eslint.config.js",
       ".prettierrc",
       "dist/**",
+      ".wrangler/**",
       ".output/**",
       ".tanstack/**",
       "coverage/**",

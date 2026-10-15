@@ -1,0 +1,10 @@
+node_modules
+dist
+.output
+.tanstack
+.wrangler
+.git
+.playwright-mcp
+test-results
+playwright-report
+coverage

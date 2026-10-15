@@ -6,15 +6,25 @@ import { pageTitle, productJsonLd, seo, serializeJsonLd } from "@/lib/seo"
 
 describe("seo()", () => {
   it("builds canonical, OG and Twitter tags from one input", () => {
-    const head = seo({ title: "Kontak", path: "/kontak", description: "Hubungi kami" })
+    const head = seo({
+      title: "Kontak",
+      path: "/kontak",
+      description: "Hubungi kami",
+    })
     const meta = Object.fromEntries(
       head.meta.map((m) => ["title" in m ? "title" : (m.name ?? m.property), m])
     )
     expect(meta.title).toEqual({ title: `Kontak | ${site.name}` })
     expect(meta["og:url"]).toMatchObject({ content: `${site.url}/kontak` })
-    expect(meta["og:image"]).toMatchObject({ content: `${site.url}/images/og-default.jpg` })
-    expect(meta["twitter:card"]).toMatchObject({ content: "summary_large_image" })
-    expect(head.links).toEqual([{ rel: "canonical", href: `${site.url}/kontak` }])
+    expect(meta["og:image"]).toMatchObject({
+      content: `${site.url}/images/og-default.jpg`,
+    })
+    expect(meta["twitter:card"]).toMatchObject({
+      content: "summary_large_image",
+    })
+    expect(head.links).toEqual([
+      { rel: "canonical", href: `${site.url}/kontak` },
+    ])
   })
 
   it("marks pages noindex on request", () => {

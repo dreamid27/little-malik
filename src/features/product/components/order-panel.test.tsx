@@ -29,7 +29,9 @@ describe("<OrderPanel>", () => {
     const user = userEvent.setup()
     render(<OrderPanel product={product} />)
 
-    await user.click(within(screen.getByTestId("size-options")).getByText("4 th"))
+    await user.click(
+      within(screen.getByTestId("size-options")).getByText("4 th")
+    )
     await user.click(screen.getByRole("radio", { name: "Merah Muda Blush" }))
     await user.click(screen.getByRole("button", { name: "Tambah jumlah" }))
     await user.click(screen.getByRole("button", { name: "Tambah jumlah" }))

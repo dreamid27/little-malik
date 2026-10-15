@@ -48,7 +48,11 @@ describe("buildOrderMessage", () => {
 describe("buildInquiryMessage", () => {
   it("trims user input", () => {
     expect(
-      buildInquiryMessage({ name: "  Aisyah ", topic: "Tukar ukuran", message: "  Halo  " })
+      buildInquiryMessage({
+        name: "  Aisyah ",
+        topic: "Tukar ukuran",
+        message: "  Halo  ",
+      })
     ).toBe(`Halo ${site.name}! Saya Aisyah.\nTopik: Tukar ukuran\n\nHalo`)
   })
 })

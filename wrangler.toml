@@ -1,0 +1,8 @@
+# Cloudflare Pages project config — https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+name = "little-malik"
+pages_build_output_dir = "dist/client"
+compatibility_date = "2026-09-01"
+
+# VITE_SITE_URL is a *build-time* variable: set it in the Pages dashboard
+# (Settings → Environment variables) or in CI — not in [vars], which only
+# reaches Pages Functions at runtime.

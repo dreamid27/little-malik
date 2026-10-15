@@ -12,11 +12,16 @@ describe("<ContactForm>", () => {
     const user = userEvent.setup()
     render(<ContactForm />)
 
-    await user.click(screen.getByRole("button", { name: /Kirim lewat WhatsApp/ }))
+    await user.click(
+      screen.getByRole("button", { name: /Kirim lewat WhatsApp/ })
+    )
 
     expect(screen.getByText(/Tulis nama Anda/)).toBeInTheDocument()
     expect(screen.getByText(/minimal 10 karakter/)).toBeInTheDocument()
-    expect(screen.getByLabelText("Nama")).toHaveAttribute("aria-invalid", "true")
+    expect(screen.getByLabelText("Nama")).toHaveAttribute(
+      "aria-invalid",
+      "true"
+    )
     expect(open).not.toHaveBeenCalled()
   })
 
@@ -27,8 +32,13 @@ describe("<ContactForm>", () => {
 
     await user.type(screen.getByLabelText("Nama"), "Bunda Aisyah")
     await user.selectOptions(screen.getByLabelText("Topik"), "Tukar ukuran")
-    await user.type(screen.getByLabelText("Pesan"), "Mau tukar ukuran dress ke 5 th.")
-    await user.click(screen.getByRole("button", { name: /Kirim lewat WhatsApp/ }))
+    await user.type(
+      screen.getByLabelText("Pesan"),
+      "Mau tukar ukuran dress ke 5 th."
+    )
+    await user.click(
+      screen.getByRole("button", { name: /Kirim lewat WhatsApp/ })
+    )
 
     expect(open).toHaveBeenCalledOnce()
     const url = new URL(open.mock.calls[0][0] as string)

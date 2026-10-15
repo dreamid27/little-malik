@@ -22,6 +22,9 @@ export default defineConfig({
     screenshot: "only-on-failure",
     locale: "id-ID",
     timezoneId: "Asia/Jakarta",
+    // Hero garments sway forever; reduced motion keeps them clickable/stable
+    // and exercises the prefers-reduced-motion path.
+    reducedMotion: "reduce",
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },

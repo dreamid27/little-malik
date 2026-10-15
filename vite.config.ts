@@ -12,6 +12,9 @@ import { staticRoutes } from "./scripts/routes"
  */
 export default defineConfig({
   resolve: { tsconfigPaths: true },
+  // The prerenderer boots a preview server; pin IPv4 so `localhost` can't
+  // resolve to ::1 in containers/CI while fetch dials 127.0.0.1.
+  preview: { host: "127.0.0.1" },
   plugins: [
     tailwindcss(),
     tanstackStart({

@@ -5,7 +5,8 @@
 import { absoluteUrl, site } from "@/config/site"
 import { categories, findById, sizes } from "@/content/catalog"
 import type { Product } from "@/content/products"
-import { getProductShareImage } from "@/content/products"
+import { getProductShareImage, products } from "@/content/products"
+import { formatRupiah } from "@/lib/format"
 
 type JsonLd = Record<string, unknown>
 
@@ -80,6 +81,11 @@ export function seo({
 
 const ORG_ID = `${site.url}/#store`
 
+function catalogPriceRange(): string {
+  const prices = products.map((p) => p.price)
+  return `${formatRupiah(Math.min(...prices))} – ${formatRupiah(Math.max(...prices))}`
+}
+
 export function storeJsonLd(): JsonLd {
   return {
     "@context": "https://schema.org",
@@ -94,7 +100,7 @@ export function storeJsonLd(): JsonLd {
     image: absoluteUrl(DEFAULT_OG_IMAGE),
     email: site.contact.email,
     telephone: site.contact.whatsappDisplay.replace(/[\s-]/g, ""),
-    priceRange: "Rp59.000 – Rp199.000",
+    priceRange: catalogPriceRange(),
     currenciesAccepted: site.currency,
     paymentAccepted: "Transfer bank, e-wallet",
     foundingDate: String(site.foundingYear),
@@ -201,11 +207,11 @@ export function productJsonLd(product: Product): JsonLd {
   }
 }
 
-export function itemListJsonLd(products: ReadonlyArray<Product>): JsonLd {
+export function itemListJsonLd(items: ReadonlyArray<Product>): JsonLd {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: products.map((p, index) => ({
+    itemListElement: items.map((p, index) => ({
       "@type": "ListItem",
       position: index + 1,
       url: absoluteUrl(`/produk/${p.slug}`),

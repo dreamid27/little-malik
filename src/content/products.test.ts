@@ -18,19 +18,22 @@ describe("product catalogue", () => {
     for (const slug of slugs) expect(slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
   })
 
-  it.each(products.map((p) => [p.slug, p] as const))("%s is well-formed", (_, p) => {
-    expect(categoryIds).toContain(p.category)
-    expect(p.price).toBeGreaterThan(0)
-    if (p.compareAtPrice) expect(p.compareAtPrice).toBeGreaterThan(p.price)
-    expect(p.colors.length).toBeGreaterThan(0)
-    expect(p.sizes.length).toBeGreaterThan(0)
-    expect(p.ageGroups.length).toBeGreaterThan(0)
-    expect(Number.isNaN(Date.parse(p.addedAt))).toBe(false)
-    // Sizes are listed smallest → largest.
-    const order = p.sizes.map((s) => sizes.findIndex((x) => x.id === s))
-    expect(order).toEqual([...order].sort((a, b) => a - b))
-    expect(order).not.toContain(-1)
-  })
+  it.each(products.map((p) => [p.slug, p] as const))(
+    "%s is well-formed",
+    (_, p) => {
+      expect(categoryIds).toContain(p.category)
+      expect(p.price).toBeGreaterThan(0)
+      if (p.compareAtPrice) expect(p.compareAtPrice).toBeGreaterThan(p.price)
+      expect(p.colors.length).toBeGreaterThan(0)
+      expect(p.sizes.length).toBeGreaterThan(0)
+      expect(p.ageGroups.length).toBeGreaterThan(0)
+      expect(Number.isNaN(Date.parse(p.addedAt))).toBe(false)
+      // Sizes are listed smallest → largest.
+      const order = p.sizes.map((s) => sizes.findIndex((x) => x.id === s))
+      expect(order).toEqual([...order].sort((a, b) => a - b))
+      expect(order).not.toContain(-1)
+    }
+  )
 
   it("has generated images on disk for every product", () => {
     const publicDir = path.resolve(__dirname, "../../public")
